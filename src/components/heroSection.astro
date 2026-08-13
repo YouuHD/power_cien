@@ -126,7 +126,7 @@ const isImageLeft = direction === "left";
 
         <!-- Contenedor de la Imagen principal -->
         <div
-          class="relative aspect-[16/10] w-full overflow-hidden rounded-3xl border border-zinc-800/50 bg-zinc-900 shadow-xl"
+          class="relative aspect-16/10 w-full overflow-hidden rounded-3xl border border-zinc-800/50 bg-zinc-900 shadow-xl"
         >
           <slot name="media">
             {
@@ -139,7 +139,7 @@ const isImageLeft = direction === "left";
                 />
               ) : (
                 //<!-- Patrón transparente de placeholder tipo Figma -->
-                <div class="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] bg-zinc-900/90 flex items-center justify-center">
+                <div class="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [bg-size:16px_16px] bg-zinc-900/90 flex items-center justify-center">
                   <span class="text-xs text-zinc-600 font-medium">Image / Asset Placeholder</span>
                 </div>
               )
