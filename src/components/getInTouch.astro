@@ -43,6 +43,7 @@ const cardStyles = {
     button: "bg-yellow-400 text-zinc-950 font-semibold hover:bg-yellow-300 focus-visible:ring-yellow-400",
   },
 }[variant];
+
 ---
 
 <section id="cotizacion" class={`w-full bg-[#18181b] p-6 sm:p-12 md:p-20 ${className}`}>
@@ -66,8 +67,8 @@ const cardStyles = {
 
       <!-- Formulario de Entrada -->
       <form
-        action={actionUrl}
-        method="POST"
+        id="contact-form"
+        action="/api/contact"
         class="mt-8 flex w-full max-w-md flex-col items-center justify-center gap-3 sm:flex-row"
       >
         <div class="w-full">
@@ -90,8 +91,39 @@ const cardStyles = {
       
       <!-- Slot opcional para disclaimer o notas de privacidad -->
       <div class="mt-4">
+        <p id="message" class="mt-4 text-sm"></p>
         <slot name="footer" />
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+const message = document.getElementById("message") as HTMLParagraphElement | null;
+
+if (form && message) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    console.log("Form data:", Object.fromEntries(formData.entries()));
+    const response = await fetch(form.action, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: formData.get("email") }),
+    });
+
+    if (response.ok) {
+      message.textContent =
+        "¡Gracias por tu solicitud! Nos pondremos en contacto contigo pronto.";
+      form.reset();
+    } else {
+      message.textContent =
+        "Hubo un error al enviar tu solicitud. Por favor, inténtalo de nuevo.";
+    }
+  });
+}
+</script>
