@@ -1,0 +1,95 @@
+---
+import Button from "../components/button.astro";
+
+interface Props {
+    variant?: "dark" | "light";
+}
+
+const { variant = "dark" } = Astro.props;
+const isDark = variant === "dark";
+---
+
+<header
+    class={`w-full border ${
+        isDark ? "border-zinc-800 bg-[#211F1F]" : "border-zinc-200 bg-white"
+    }`}
+>
+    <div
+        class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8"
+    >
+        <!-- Logo -->
+        <a href="/" class="flex items-center">
+            <img src="public/img/logo.jpg" alt="Power CIEN" class="h-11 w-auto" />
+        </a>
+
+        <!-- Navegación escritorio -->
+        <nav class="hidden items-center gap-10 md:flex">
+            <a
+                href="#Nosotros"
+                class={`text-sm font-medium transition-colors ${
+                    isDark
+                        ? "text-zinc-100 hover:text-[#F5EC02]"
+                        : "text-zinc-800 hover:text-[#211F1F]"
+                }`}
+            >
+                Nosotros
+            </a>
+
+            <a
+                href="#Soluciones"
+                class={`text-sm font-medium transition-colors ${
+                    isDark
+                        ? "text-zinc-100 hover:text-[#F5EC02]"
+                        : "text-zinc-800 hover:text-[#211F1F]"
+                }`}
+            >
+                Soluciones
+            </a>
+
+            <a
+                href="#Proyectos"
+                class={`text-sm font-medium transition-colors ${
+                    isDark
+                        ? "text-zinc-100 hover:text-[#F5EC02]"
+                        : "text-zinc-800 hover:text-[#211F1F]"
+                }`}
+            >
+                Proyectos
+            </a>
+        </nav>
+
+        <!-- CTA escritorio -->
+        <div class="hidden md:block">
+            <a href="#cotizacion" class="text-sm font-medium">
+                <Button variant={isDark ? "secondary" : "primary"} size="medium">
+                    Comenzar
+                </Button>
+            </a>
+            
+        </div>
+
+        <!-- Botón móvil -->
+        <button
+            class={`inline-flex items-center justify-center rounded-xl p-2 transition-colors md:hidden ${
+                isDark
+                    ? "text-white hover:bg-zinc-800"
+                    : "text-zinc-900 hover:bg-zinc-100"
+            }`}
+            aria-label="Abrir menú"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </div>
+</header>

@@ -1,0 +1,30 @@
+---
+//Sirve para metricas y demás elementos
+
+interface Props {
+    title?: string;
+    description?: string;
+    variant?: "light" | "accent" | "outline" | "dark" | "ghost";
+    size?: "small" | "medium" | "large";
+}
+
+const sizes = {
+    small: "h-9 px-3 text-sm",
+    medium: "h-10 px-4 text-sm",
+    large: "h-11 px-6 text-base",
+};
+
+const {
+    title = "Title",
+    description = "Description",
+    variant = "light",
+    size = "medium"
+} = Astro.props;
+
+
+---
+
+<article class={`card card--${variant} card--${size}`}>
+    <h3 class="card__title">{title}</h3>
+    <p class="card__description">{description}</p>
+</article>

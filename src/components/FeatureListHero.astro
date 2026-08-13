@@ -1,0 +1,163 @@
+---
+export interface ChecklistItem {
+  title: string;
+  description: string;
+  icon?: string; // Opcional por si quieres pasar un SVG inline o un nombre
+}
+
+interface Props {
+  tag?: string;
+  title: string;
+  description?: string;
+  items?: ChecklistItem[];
+  direction?: "left" | "right";
+  variant?: "dark" | "yellow" | "navy";
+  imageSrc?: string;
+  imageAlt?: string;
+  class?: string;
+}
+
+const {
+  tag,
+  title,
+  description,
+  items = [],
+  direction = "right",
+  variant = "dark",
+  imageSrc,
+  imageAlt = "Feature visual",
+  class: className = "",
+} = Astro.props;
+
+// Configuración de tokens según la variante
+const variantStyles = {
+  dark: {
+    bg: "bg-[#18181b]",
+    tag: "text-zinc-400",
+    title: "text-(--neutral)",
+    desc: "text-zinc-400",
+    itemTitle: "text-white",
+    itemDesc: "text-zinc-400",
+    badge: "border-zinc-700 bg-zinc-800 text-zinc-300",
+  },
+  yellow: {
+    bg: "bg-[#18181b]",
+    tag: "text-zinc-400",
+    title: "text-(--secondary)",
+    desc: "text-zinc-400",
+    itemTitle: "text-(--secondary)",
+    itemDesc: "text-zinc-400",
+    badge: "border-(--secondary)/30 bg-(--secondary) text-zinc-950",
+  },
+  navy: {
+    bg: "bg-[#0d1527]",
+    tag: "text-zinc-400",
+    title: "text-(--secondary)",
+    desc: "text-zinc-300",
+    itemTitle: "text-(--secondary)",
+    itemDesc: "text-zinc-400",
+    badge: "border-(--secondary)/30 bg-(--secondary) text-zinc-950",
+  },
+}[variant];
+
+const isImageLeft = direction === "left";
+---
+
+<section id={tag}
+  class={`relative overflow-hidden p-8 md:p-14 transition-colors ${variantStyles.bg} ${className}`}
+>
+  <div
+    class={`grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16 ${
+      isImageLeft ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""
+    }`}
+  >
+    <!-- Bloque de Texto y Lista de Features -->
+    <div class="flex flex-col justify-center space-y-8 lg:col-span-6">
+      
+      <!-- Encabezado -->
+      <div class="space-y-3">
+        {
+          tag && (
+            <span class={`text-sm font-semibold tracking-wider ${variantStyles.tag}`}>
+              {tag}
+            </span>
+          )
+        }
+        <h2 class={`text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl ${variantStyles.title}`}>
+          {title}
+        </h2>
+        {
+          description && (
+            <p class={`text-sm sm:text-base leading-relaxed ${variantStyles.desc}`}>
+              {description}
+            </p>
+          )
+        }
+      </div>
+
+      <!-- Lista vertical con checks dinámicos -->
+      {
+        items.length > 0 && (
+          <div class="space-y-5 pt-2">
+            {items.map((item) => (
+              <div class="flex items-start gap-3.5">
+                <!-- Check / Icon Badge -->
+                <div
+                  class={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border ${variantStyles.badge}`}
+                >
+                  <svg
+                    class="h-3.5 w-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+
+                <!-- Título y Texto secundario -->
+                <div>
+                  <h4 class={`text-sm font-semibold leading-none ${variantStyles.itemTitle}`}>
+                    {item.title}
+                  </h4>
+                  <p class={`mt-1 text-xs leading-relaxed ${variantStyles.itemDesc}`}>
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      <slot name="actions" />
+    </div>
+
+    <!-- Bloque de Imagen / Visual -->
+    <div class="relative lg:col-span-6">
+      <div
+        class="relative aspect-16/10 w-full overflow-hidden rounded-3xl border border-zinc-800/60 bg-zinc-900 shadow-xl"
+      >
+        <slot name="media">
+          {
+            imageSrc ? (
+              <img
+                src={imageSrc}
+                alt={imageAlt}
+                class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+              />
+            ) : (
+              //<!-- Placeholder Figma Grid -->
+              <div class="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [bg-size:16px_16px] bg-zinc-900/90 flex items-center justify-center">
+                <span class="text-xs text-zinc-600 font-medium">Image / Asset Placeholder</span>
+              </div>
+            )
+          }
+        </slot>
+      </div>
+    </div>
+
+  </div>
+</section>

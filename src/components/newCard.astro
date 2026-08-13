@@ -1,0 +1,152 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  variant?: "dark" | "light" | "yellow" | "blue";
+  showBadges?: boolean;
+  glow?: boolean; // Activar efecto de brillo interactivo
+  class?: string;
+  footer?: string; // Texto del footer, si no se proporciona, se mostrará el slot
+}
+
+const {
+  title,
+  description,
+  variant = "dark",
+  showBadges = true,
+  glow = true,
+  class: className = "",
+  footer,
+} = Astro.props;
+
+// Clases por variante y colores de resplandor (glow)
+const variantConfig = {
+  dark: {
+    card: "bg-zinc-950/80 border-zinc-800/80 text-zinc-100 hover:border-zinc-600",
+    glowColor: "rgba(255, 255, 255, 0.12)",
+    title: "text-white",
+    desc: "text-zinc-400",
+    badge: "border-zinc-700 bg-zinc-900/60 text-zinc-300",
+    divider: "border-zinc-800/80",
+    footer: "text-zinc-400",
+  },
+  light: {
+    card: "bg-white border-zinc-200 text-zinc-900 shadow-sm hover:border-zinc-400",
+    glowColor: "rgba(0, 0, 0, 0.05)",
+    title: "text-zinc-900",
+    desc: "text-zinc-500",
+    badge: "border-zinc-200 bg-zinc-50 text-zinc-700",
+    divider: "border-zinc-100",
+    footer: "text-zinc-500",
+  },
+  yellow: {
+    card: "bg-zinc-950/80 border-zinc-800/80 text-zinc-100 hover:border-yellow-400/50",
+    glowColor: "rgba(250, 204, 21, 0.15)", // Brillo dorado
+    title: "text-(--secondary)",
+    desc: "text-zinc-400",
+    badge: "border-yellow-400/40 bg-yellow-400/10 text-yellow-400",
+    divider: "border-zinc-800/80",
+    footer: "text-(--secondary)",
+  },
+  blue: {
+    card: "bg-white border-zinc-200 text-zinc-900 shadow-sm hover:border-blue-400/50",
+    glowColor: "rgba(37, 99, 235, 0.12)", // Brillo azul
+    title: "text-blue-950 font-bold",
+    desc: "text-zinc-500",
+    badge: "border-blue-200 bg-blue-50 text-blue-900",
+    divider: "border-zinc-100",
+    footer: "text-zinc-500",
+  },
+}[variant];
+---
+
+<div
+  data-glow-card
+  style={`--glow-color: ${variantConfig.glowColor};`}
+  class={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-all duration-300 backdrop-blur-sm ${variantConfig.card} ${className}`}
+>
+  {/* Capa de efecto Glow que sigue el mouse */}
+  {
+    glow && (
+      <div
+        data-glow-overlay
+        class="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style="background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-color), transparent 60%);"
+      />
+    )
+  }
+
+  {/* Contenido Superior */}
+  <div class="relative z-10">
+    {
+      showBadges && (
+        <div class="mb-6 flex items-center justify-between">
+          {/* Badge Izquierdo con slot dinámico */}
+          <div
+            class={`flex h-7 w-7 items-center justify-center rounded-lg border transition-transform duration-200 group-hover:scale-105 ${variantConfig.badge}`}
+          >
+            <slot name="start-icon">
+              <!-- Default Check Icon -->
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </slot>
+          </div>
+
+          {/* Badge Derecho con slot dinámico */}
+          <div
+            class={`flex h-7 w-7 items-center justify-center rounded-lg border transition-transform duration-200 group-hover:scale-105 ${variantConfig.badge}`}
+          >
+            <slot name="end-icon">
+              <!-- Default Check Icon -->
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </slot>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Título y Descripción -->
+    <h3 class={`text-xl font-bold tracking-tight ${variantConfig.title}`}>
+      {title}
+    </h3>
+    {
+      description && (
+        <p class={`mt-2 text-sm leading-relaxed ${variantConfig.desc}`}>
+          {description}
+        </p>
+      )
+    }
+  </div>
+
+  <!-- Footer / Slot inferior -->
+  <div
+    class={`relative z-10 mt-6 border-t pt-4 text-xs ${variantConfig.divider} ${variantConfig.footer}`}
+  >
+    <slot>
+      <span>{footer}</span>
+    </slot>
+  </div>
+</div>
+
+<script>
+  // Script liviano para calcular la posición del cursor en cada card
+  function setupGlowCards() {
+    const cards = document.querySelectorAll<HTMLElement>("[data-glow-card]");
+    cards.forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = `${e.clientX - rect.left}px`;
+        const y = `${e.clientY - rect.top}px`;
+        card.style.setProperty("--mouse-x", x);
+        card.style.setProperty("--mouse-y", y);
+      });
+    });
+  }
+
+  // Soporta Astro View Transitions y carga inicial
+  setupGlowCards();
+  document.addEventListener("astro:page-load", setupGlowCards);
+</script>
