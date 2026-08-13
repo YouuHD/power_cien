@@ -1,0 +1,141 @@
+---
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface FooterSection {
+  title: string;
+  links: FooterLink[];
+}
+
+interface Props {
+  brandName?: string;
+  description?: string;
+  sections?: FooterSection[];
+  copyright?: string;
+  legalLinks?: FooterLink[];
+  class?: string;
+}
+
+const defaultSections: FooterSection[] = [
+  {
+    title: "Soluciones",
+    links: [
+      { label: "Home energy", href: "#" },
+      { label: "Business energy", href: "#" },
+      { label: "Solar & battery", href: "#" },
+      { label: "Electric vehicles", href: "#" },
+    ],
+  },
+  {
+    title: "Empresa",
+    links: [
+      { label: "Nosotros", href: "#Nosotros" },
+      { label: "Soluciones", href: "#Soluciones" },
+      { label: "Especialidades", href: "#Especialidades" },
+      { label: "Proyectos", href: "#Proyectos" },
+    ],
+  },
+  {
+    title: "Contacto",
+    links: [
+      { label: "Correo: info@powercien.com", href: "mailto:info@powercien.com" },
+      { label: "Teléfono: 618212345678", href: "tel:618212345678" },
+      { label: "Facebook", href: "https://www.facebook.com/powercien" },
+      { label: "Instagram", href: "https://www.instagram.com/power_cien100/" },
+    ],
+  },
+];
+
+const defaultLegalLinks: FooterLink[] = [
+  { label: "Privacidad", href: "#" },
+  { label: "Terminos", href: "#" },
+  { label: "Cookies", href: "#" },
+];
+
+const {
+  brandName = "Nombre de la empresa",
+  description = "Descripción breve de la empresa",
+  sections = defaultSections,
+  copyright = "© 2026 derechos reservados.",
+  legalLinks = defaultLegalLinks,
+  class: className = "",
+} = Astro.props;
+---
+
+<footer class={`w-full bg-[#141414] text-zinc-400 ${className}`}>
+  <div class="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-10">
+    <!-- Parte superior: Marca + Columnas de enlaces -->
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
+      
+      <!-- Columna de Marca (Logo + Descripción) -->
+      <div class="space-y-4 lg:col-span-4">
+        <!-- Logo con Badge interactivo -->
+        <a href="/" class="inline-flex items-center gap-2 text-white font-bold text-lg hover:opacity-90 transition-opacity">
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100 text-zinc-950">
+            <!-- Icono Rayo ver si cambiar a logo imagen-->
+            <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+              <path d="M13 2L3 14h8l-1 8 11-13h-8l1-7z" />
+            </svg>
+          </div>
+          <span>{brandName}</span>
+        </a>
+
+        <!-- Descripción -->
+        <p class="max-w-sm text-sm leading-relaxed text-zinc-400">
+          {description}
+        </p>
+      </div>
+
+      <!-- Columnas de Enlaces de Navegación -->
+      <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8">
+        {
+          sections.map((section) => (
+            <div class="space-y-3">
+              <h3 class="text-sm font-semibold text-white tracking-wide">
+                {section.title}
+              </h3>
+              <ul class="space-y-2.5 text-sm">
+                {section.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="text-zinc-400 transition-colors duration-150 hover:text-white"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Línea divisoria inferior -->
+    <div class="mt-12 border-t border-zinc-800/80 pt-8 sm:mt-16">
+      <div class="flex flex-col-reverse items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <!-- Copyright -->
+        <p class="text-xs sm:text-sm text-zinc-500">
+          {copyright}
+        </p>
+
+        <!-- Enlaces Legales -->
+        <div class="flex flex-wrap items-center gap-6 text-xs sm:text-sm">
+          {
+            legalLinks.map((legal) => (
+              <a
+                href={legal.href}
+                class="text-zinc-400 transition-colors duration-150 hover:text-white"
+              >
+                {legal.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

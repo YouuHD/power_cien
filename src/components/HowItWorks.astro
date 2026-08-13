@@ -1,0 +1,130 @@
+---
+export interface StepItem {
+  title: string;
+  subtitle: string;
+  icon?: string;
+}
+
+interface Props {
+  tag?: string;
+  title: string;
+  description?: string;
+  steps?: StepItem[];
+  variant?: "dark" | "yellow" | "navy" | "light";
+  columns?: 3 | 4;
+  class?: string;
+}
+
+const {
+  tag,
+  title,
+  description,
+  steps = [],
+  variant = "dark",
+  columns = 3,
+  class: className = "",
+} = Astro.props;
+
+// Configuración de variantes visuales
+const variantStyles = {
+  dark: {
+    bg: "bg-[#18181b]",
+    tag: "text-zinc-400",
+    title: "text-white",
+    desc: "text-zinc-400",
+    itemTitle: "text-white",
+    itemSub: "text-zinc-400",
+    badge: "border-zinc-700 bg-zinc-800 text-zinc-300",
+  },
+  yellow: {
+    bg: "bg-[#18181b]",
+    tag: "text-zinc-400",
+    title: "text-(--secondary)",
+    desc: "text-zinc-400",
+    itemTitle: "text-(--secondary)",
+    itemSub: "text-zinc-400",
+    badge: "border-(--secondary)/30 bg-(--secondary) text-zinc-950",
+  },
+  navy: {
+    bg: "bg-[#0d1527]",
+    tag: "text-zinc-400",
+    title: "text-(--secondary)",
+    desc: "text-zinc-300",
+    itemTitle: "text-(--secondary)",
+    itemSub: "text-zinc-400",
+    badge: "border-(--secondary)/30 bg-(--secondary) text-zinc-950",
+  },
+  light: {
+    bg: "bg-white",
+    tag: "text-zinc-500",
+    title: "text-zinc-900",
+    desc: "text-zinc-500",
+    itemTitle: "text-zinc-900",
+    itemSub: "text-zinc-500",
+    badge: "border-zinc-200 bg-zinc-100 text-zinc-700",
+  },
+}[variant];
+
+const gridColsClass = columns === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
+---
+
+<section
+  class={`relative overflow-hidden p-8 md:p-16 transition-colors ${variantStyles.bg} ${className}`}
+>
+  <div class="mx-auto max-w-6xl">
+    <!-- Header de la Sección -->
+    <div class="max-w-xl space-y-3">
+      {
+        tag && (
+          <span class={`text-sm font-semibold tracking-wider ${variantStyles.tag}`}>
+            {tag}
+          </span>
+        )
+      }
+      <h2 class={`text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl ${variantStyles.title}`}>
+        {title}
+      </h2>
+      {
+        description && (
+          <p class={`text-sm sm:text-base leading-relaxed ${variantStyles.desc}`}>
+            {description}
+          </p>
+        )
+      }
+    </div>
+
+    <!-- Grid de pasos / items centrados -->
+    <div class={`mt-14 grid grid-cols-1 gap-8 sm:gap-10 ${gridColsClass}`}>
+      {
+        steps.map((step, index) => (
+          <div class="flex flex-col items-center text-center ">
+            <!-- Icono / Badge -->
+            <div
+              class={`flex h-8 w-8 items-center justify-center rounded-md border transition-transform duration-200 hover:scale-110 ${variantStyles.badge}`}
+            >
+              <slot name={`icon-${index}`}>
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="3"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </slot>
+            </div>
+
+            <!-- Título y Subtítulo -->
+            <h3 class={`mt-4 text-lg font-bold tracking-tight ${variantStyles.itemTitle}`}>
+              {step.title}
+            </h3>
+            <p class={`mt-1.5 text-xs sm:text-sm leading-relaxed ${variantStyles.itemSub}`}>
+              {step.subtitle}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

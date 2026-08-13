@@ -1,0 +1,37 @@
+---
+//Sirve para metricas y demás elementos
+
+interface Props {
+    title?: string;
+    description?: string;
+    variant?: "light" | "accent" | "outline" | "dark" | "ghost";
+    size?: "small" | "medium" | "large";
+}
+
+const sizes = {
+    small: "h-9 px-3 text-sm",
+    medium: "h-10 px-4 text-sm",
+    large: "h-11 px-6 text-base",
+};
+
+const {
+    title = "Title",
+    description = "Description",
+    variant = "dark",
+    size = "medium"
+} = Astro.props;
+
+
+---
+
+<article class={`feature-card feature-card-${variant} `}>
+    <div class="feature-card__icon">
+        ⚡
+    </div>
+    <h3 class="feature-card__title">{title}</h3>
+    <p class="feature-card__description">{description}</p>
+    <div class="feature-card__footer">
+        Más información
+    </div>
+</article>
+

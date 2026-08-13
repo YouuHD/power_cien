@@ -1,0 +1,97 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  placeholder?: string;
+  buttonText?: string;
+  variant?: "light" | "dark" | "yellow";
+  actionUrl?: string;
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  placeholder = "Ingresa tu correo",
+  buttonText = "Enviar",
+  variant = "light",
+  actionUrl = "#",
+  class: className = "",
+} = Astro.props;
+
+// Variantes para la tarjeta interior
+const cardStyles = {
+  light: {
+    cardBg: "bg-(--neutral) text-zinc-900 border-zinc-200",
+    title: "text-zinc-950",
+    subtitle: "text-zinc-500",
+    input: "border-zinc-300 bg-white text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-zinc-900/10",
+    button: "bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900",
+  },
+  dark: {
+    cardBg: "bg-zinc-900/90 text-white border-zinc-800",
+    title: "text-white",
+    subtitle: "text-zinc-400",
+    input: "border-zinc-700 bg-zinc-950 text-white placeholder:text-zinc-500 focus:border-white focus:ring-white/10",
+    button: "bg-white text-zinc-900 hover:bg-zinc-200 focus-visible:ring-white",
+  },
+  yellow: {
+    cardBg: "bg-zinc-900/90 text-white border-zinc-800",
+    title: "text-yellow-400",
+    subtitle: "text-zinc-400",
+    input: "border-zinc-700 bg-zinc-950 text-white placeholder:text-zinc-500 focus:border-yellow-400 focus:ring-yellow-400/20",
+    button: "bg-yellow-400 text-zinc-950 font-semibold hover:bg-yellow-300 focus-visible:ring-yellow-400",
+  },
+}[variant];
+---
+
+<section id="cotizacion" class={`w-full bg-[#18181b] p-6 sm:p-12 md:p-20 ${className}`}>
+  <div class="mx-auto max-w-4xl">
+    <!-- Card Contenedora -->
+    <div
+      class={`flex flex-col items-center justify-center rounded-3xl border px-6 py-16 text-center sm:px-12 md:py-24 shadow-2xl transition-all ${cardStyles.cardBg}`}
+    >
+      <!-- Título & Subtítulo -->
+      <h2 class={`text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl ${cardStyles.title}`}>
+        {title}
+      </h2>
+      
+      {
+        subtitle && (
+          <p class={`mt-3 max-w-md text-base sm:text-lg ${cardStyles.subtitle}`}>
+            {subtitle}
+          </p>
+        )
+      }
+
+      <!-- Formulario de Entrada -->
+      <form
+        action={actionUrl}
+        method="POST"
+        class="mt-8 flex w-full max-w-md flex-col items-center justify-center gap-3 sm:flex-row"
+      >
+        <div class="w-full">
+          <input
+            type="email"
+            required
+            name="email"
+            placeholder={placeholder}
+            class={`w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 ${cardStyles.input}`}
+          />
+        </div>
+
+        <button
+          type="submit"
+          class={`w-full shrink-0 rounded-lg px-6 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:w-auto ${cardStyles.button}`}
+        >
+          {buttonText}
+        </button>
+      </form>
+      
+      <!-- Slot opcional para disclaimer o notas de privacidad -->
+      <div class="mt-4">
+        <slot name="footer" />
+      </div>
+    </div>
+  </div>
+</section>

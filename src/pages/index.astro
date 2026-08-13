@@ -1,11 +1,132 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/button.astro';
+import '../styles/global.css';
+import StatCard from '../components/StatCard.astro';
+import IconCard from '../components/iconCard.astro';
+import NavBar from '../components/navBar.astro';
+import Hero from '../components/hero.astro';
+import Stats from '../components/stats.astro';
+import NewCard from '../components/newCard.astro';
+import CardSection from '../components/cardSection.astro';
+import HeroSection from '../components/heroSection.astro';
+import FeatureListHero from '../components/FeatureListHero.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import GetInTouch from '../components/getInTouch.astro';
+import Footer from '../components/footer.astro';
+
+const mockFeatures = [
+  { title: "13+", subtitle: "Años de experiencia" },
+  { title: "200", subtitle: "Proyectos completados" },
+  { title: "100%", subtitle: "Clientes satisfechos" },
+];
+
+const checklist = [
+  { title: "Asesoría", description: "texto para acompañar" },
+  { title: "Estudios", description: "texto para acompañar" },
+  { title: "Anteproyectos", description: "texto para acompañar" },
+  { title: "Ingeniería", description: "texto para acompañar" },
+  { title: "Construcción", description: "texto para acompañar" },
+  { title: "Puesta en servicio", description: "texto para acompañar" },
+  { title: "Capacitación", description: "texto para acompañar" },
+  { title: "Mantenimiento", description: "texto para acompañar" },
+];
+
+const defaultSteps = [
+  { title: "Contacto", subtitle: "Ponte en contacto con nostros para obtener más información" },
+  { title: "Planificación", subtitle: "Crearemos un plan detallado para tu proyecto" },
+  { title: "Ejecución", subtitle: "Implementaremos el plan con la máxima eficiencia y calidad" },
+];
 ---
 
 <Layout>
-	<Welcome />
+	<NavBar variant="dark"/>
+	<Hero variant="dark-accent"/>
+	<Stats stats={[
+		{ title: "13+", description: "Años de experiencia" },
+		{ title: "35kV", description: "Subestaciones eléctricas" },
+		{ title: "Cobertura", description: "Nacional" },
+		{ title: "100%", description: "Rentabilidad" }
+	]} />
+
+  	<HeroSection
+		tag="Nosotros"
+		title="Experiencia y confianza"
+		description="Somos una empresa 100% mexicana creada en el 2011, con la finalidad de ofrecer soluciones completas e integradas a nuestros clientes, para el desarrollo e implementación de los proyectos y necesidades de infraestructura eléctrica en el mercado mexicano."
+		features={mockFeatures}
+		direction="right"
+		variant="yellow"
+		imageSrc="public/img/experiencia.png"
+	/>
+	<HeroSection
+		tag="Nosotros"
+		title="Nuestro equipo de expertos"
+		description="Contamos con un equipo de ingenieros y técnicos altamente capacitados y certificados, que se dedican a brindar soluciones innovadoras y eficientes para satisfacer las necesidades de nuestros clientes."
+		
+		direction="left"
+		variant="yellow"
+		imageSrc="public/img/Personal.jpeg"
+	/>
+
+	<FeatureListHero
+		tag="Soluciones"
+		title="Energía que se adapta a tu forma de trabajar"
+		description="Si necesita abastecer energia para toda una empresa u operación, tenemos un plan diseñado en función a sus necesidades"
+		items={checklist}
+		direction="left"
+		variant="dark"
+		imageSrc="public/img/maquina.jpeg"
+	/>
+
+	<CardSection badge="Especialidades" title="Áreas en las que destacamos" description="Garantizamos la calidad y eficiencia en todos nuestros servicios" theme="dark">
+		<NewCard title="Diseño e Ingeniería Eléctrica" description="Conceptual de de Detalle" variant="yellow" >
+			<svg slot="start-icon" class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+				<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+			</svg>
+			<svg slot="end-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+			</svg>
+		</NewCard>
+		<NewCard title="Construcción de instalaciones eléctricas" description="Llave en mano" variant="yellow" />
+		<NewCard title="Mantenimiento" description="Pruebas y supervición de instalaciones eléctricas" variant="yellow" />
+	</CardSection>
+
+	<Stats stats={[
+		{ title: "", description: "" },
+		{ title: "", description: "" },
+		{ title: "", description: "" },
+		{ title: "", description: "" }
+	]} />
+
+	<CardSection badge="Proyectos" title="Nuestros trabajos" description="Descubre algunos de nuestros proyectos más destacados y la solución que ofrecemos para cada uno." theme="light">
+		<IconCard title="Participación en el tren maya" description="Instalación, canalización y cableado de tableros de distribución 220/127 V, Instalación de charofil en bajo anden para uso exclusivo de ALSTOM, Puesta en marcha de servicios generales, entre otros."/>
+		<IconCard title="LG-MAGNA" description="Instalación eléctrica a nave industrial de Grupo Davisa de 60,00 m2, sybestación total de 18.5 MVA."  />
+		<IconCard title="HUYNDAI" description="Instalación de subestación eléctrica de Grupo Hyundai, subestación total de 4.5 MVA incluyendo instalación de 3 transformadores secos de 1500kva, etc." />
+		
+		
+	</CardSection>
+
+	<HowItWorks
+		tag="¿Cómo lo hacemos?"
+		title="Nuestro proceso de trabajo"
+		description="En Power Cien, nos enorgullece ofrecer un proceso de trabajo integral y eficiente que garantiza resultados excepcionales para nuestros clientes. Desde la concepción del proyecto hasta su finalización, seguimos un enfoque meticuloso que combina experiencia, innovación y compromiso con la calidad."
+		steps={defaultSteps}
+		variant="yellow"
+	/>
+  	<GetInTouch
+		title="¿Listo para llevar tu proyecto al siguiente nivel?"
+		subtitle="Obtén un presupuesto personalizado en menos de 24 horas y descubre cómo podemos ayudarte a alcanzar tus objetivos."
+		placeholder="Ingresa tu correo electrónico"
+		buttonText="Enviar"
+		variant="light"
+	/>
+	<Footer
+		brandName="Power Cien"
+		description="Ser una empresa comprometida con la satisfacción total de nuestros clientes, destacando por la innovación y alta calidad, contribuyendo así con el crecimiento profesional de nuestros colaboradores y de nuestro país."
+		copyright="© 2024 Power Cien. Todos los derechos reservados."
+	/>
+
+
+
 </Layout>

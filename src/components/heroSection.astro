@@ -1,0 +1,152 @@
+---
+interface FeatureItem {
+  title: string;
+  subtitle: string;
+}
+
+interface Props {
+  tag?: string;
+  title: string;
+  description?: string;
+  features?: FeatureItem[];
+  direction?: "left" | "right";
+  variant?: "dark" | "yellow" | "navy";
+  imageSrc?: string;
+  imageAlt?: string;
+  class?: string;
+}
+
+const {
+  tag,
+  title,
+  description,
+  features = [],
+  direction = "right",
+  variant = "dark",
+  imageSrc,
+  imageAlt = "Imagen de la sección",
+  class: className = "",
+} = Astro.props;
+
+// Configuración de temas/variantes
+const variantStyles = {
+  dark: {
+    bg: "bg-[#18181b]",
+    tag: "text-zinc-400",
+    title: "text-white",
+    desc: "text-zinc-400",
+    featureTitle: "text-white",
+    featureSub: "text-zinc-400",
+    frameBorder: "border-yellow-400",
+  },
+  yellow: {
+    bg: "bg-[#18181b]",
+    tag: "text-zinc-400",
+    title: "text-(--secondary)",
+    desc: "text-zinc-400",
+    featureTitle: "text-(--secondary)",
+    featureSub: "text-zinc-400",
+    frameBorder: "border-(--secondary)",
+  },
+  navy: {
+    bg: "bg-[#0d1527]",
+    tag: "text-zinc-400",
+    title: "text-(--secondary)",
+    desc: "text-zinc-300",
+    featureTitle: "text-(--secondary)",
+    featureSub: "text-zinc-400",
+    frameBorder: "border-(--secondary)",
+  },
+}[variant];
+
+const isImageLeft = direction === "left";
+---
+
+<section id={tag}
+  class={`relative overflow-hidden p-8 md:p-14 transition-colors ${variantStyles.bg} ${className}`}
+>
+  <div
+    class={`grid grid-cols-1 sm:grid-cols-3 items-center gap-10 lg:grid-cols-12 lg:gap-14 ${
+      isImageLeft ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""
+    }`}
+  >
+    <!-- Bloque de Texto y Métricas / Features -->
+    <div class="flex flex-col justify-between space-y-8 lg:col-span-6">
+      <div class="space-y-3">
+        {
+          tag && (
+            <span class={`text-sm font-semibold tracking-wider ${variantStyles.tag}`}>
+              {tag}
+            </span>
+          )
+        }
+        <h2 class={`text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl ${variantStyles.title}`}>
+          {title}
+        </h2>
+        {
+          description && (
+            <p class={`text-sm sm:text-base leading-relaxed ${variantStyles.desc}`}>
+              {description}
+            </p>
+          )
+        }
+      </div>
+
+      <!-- Métricas / Subtítulos Inferiores -->
+      {
+        features.length > 0 && (
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-zinc-800/40">
+            {features.map((item) => (
+              <div>
+                <h4 class={`text-base font-bold sm:text-lg ${variantStyles.featureTitle}`}>
+                  {item.title}
+                </h4>
+                <p class={`mt-1 text-xs sm:text-sm ${variantStyles.featureSub}`}>
+                  {item.subtitle}
+                </p>
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      <!-- Slot para CTAs o botones adicionales -->
+      <slot name="actions" />
+    </div>
+
+    <!-- Bloque de Imagen / Preview con borde desplazado -->
+    <div class="relative lg:col-span-6">
+      <div class="relative mx-auto w-full max-w-lg lg:max-w-none">
+        
+        <!-- Borde decorativo amarillo desplazado detrás -->
+        <div
+          class={`absolute inset-0 translate-x-3 translate-y-3 sm:translate-x-4 sm:translate-y-4 rounded-3xl border-2 pointer-events-none ${variantStyles.frameBorder}`}
+          aria-hidden="true"
+        />
+
+        <!-- Contenedor de la Imagen principal -->
+        <div
+          class="relative aspect-[16/10] w-full overflow-hidden rounded-3xl border border-zinc-800/50 bg-zinc-900 shadow-xl"
+        >
+          <slot name="media">
+            {
+              imageSrc ? (
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                />
+              ) : (
+                //<!-- Patrón transparente de placeholder tipo Figma -->
+                <div class="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] bg-zinc-900/90 flex items-center justify-center">
+                  <span class="text-xs text-zinc-600 font-medium">Image / Asset Placeholder</span>
+                </div>
+              )
+            }
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

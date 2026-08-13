@@ -1,0 +1,16 @@
+---
+import StatCard from '../components/StatCard.astro';
+
+interface Props {
+  stats?: { title: string; description: string }[];
+}
+
+const { stats = [] } = Astro.props;
+
+---
+
+<section class="stats">
+    {stats.map((stat) => (
+        <StatCard title={stat.title} description={stat.description} />
+    ))}
+</section>
