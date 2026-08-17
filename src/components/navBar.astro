@@ -70,14 +70,19 @@ const isDark = variant === "dark";
 
         <!-- Botón móvil -->
         <button
+            id="menu-button"
+            type="button"
             class={`inline-flex items-center justify-center rounded-xl p-2 transition-colors md:hidden ${
                 isDark
                     ? "text-white hover:bg-zinc-800"
                     : "text-zinc-900 hover:bg-zinc-100"
             }`}
             aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
         >
             <svg
+                id="menu-open-icon"
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
                 fill="none"
@@ -90,6 +95,186 @@ const isDark = variant === "dark";
                     stroke-width="2"
                     d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
+            <!-- Icono X -->
+            <svg
+                id="menu-close-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                class="hidden h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+            </svg>
         </button>
     </div>
+
 </header>
+<div
+    id="sheet-overlay"
+    class="pointer-events-none fixed inset-0 z-40 bg-black/50 opacity-0 backdrop-blur-sm transition-opacity duration-300 md:hidden"
+>
+</div>
+
+<!-- Sheet -->
+
+<aside
+    id="mobile-sheet"
+    aria-hidden="true"
+    class={`fixed right-0 top-0 z-50 flex h-dvh w-[85%] max-w-sm translate-x-full flex-col border-l shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
+        isDark
+            ? "border-zinc-800 bg-[#211F1F]"
+            : "border-zinc-200 bg-white"
+    }`}
+>
+    <!-- Header del Sheet -->
+    <div class="flex h-20 items-center justify-between px-6">
+        <span
+            class={`text-sm font-semibold ${
+                isDark ? "text-zinc-400" : "text-zinc-500"
+            }`}
+        >
+            Menú
+        </span>
+
+        <button
+            id="close-menu"
+            type="button"
+            class={`rounded-xl p-2 transition-colors ${
+                isDark
+                    ? "text-white hover:bg-zinc-800"
+                    : "text-zinc-900 hover:bg-zinc-100"
+            }`}
+            aria-label="Cerrar menú"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Línea -->
+    <div
+        class={`mx-6 border-t ${
+            isDark ? "border-zinc-800" : "border-zinc-200"
+        }`}
+    ></div>
+
+    <!-- Navegación -->
+    <nav class="flex flex-col gap-2 px-6 py-8">
+        <a
+            href="#Nosotros"
+            class={`rounded-xl px-4 py-4 text-base font-medium transition-colors ${
+                isDark
+                    ? "text-zinc-100 hover:bg-zinc-800 hover:text-[#F5EC02]"
+                    : "text-zinc-800 hover:bg-zinc-100"
+            }`}
+        >
+            Nosotros
+        </a>
+
+        <a
+            href="#Soluciones"
+            class={`rounded-xl px-4 py-4 text-base font-medium transition-colors ${
+                isDark
+                    ? "text-zinc-100 hover:bg-zinc-800 hover:text-[#F5EC02]"
+                    : "text-zinc-800 hover:bg-zinc-100"
+            }`}
+        >
+            Soluciones
+        </a>
+
+        <a
+            href="#Proyectos"
+            class={`rounded-xl px-4 py-4 text-base font-medium transition-colors ${
+                isDark
+                    ? "text-zinc-100 hover:bg-zinc-800 hover:text-[#F5EC02]"
+                    : "text-zinc-800 hover:bg-zinc-100"
+            }`}
+        >
+            Proyectos
+        </a>
+    </nav>
+
+    <!-- CTA -->
+    <div class="mt-auto px-6 pb-8">
+        <a href="#cotizacion" class="block w-full">
+            <Button
+                variant={isDark ? "secondary" : "primary"}
+                size="medium"
+            >
+                Comenzar
+            </Button>
+        </a>
+    </div>
+</aside>
+
+<script>
+    const menuButton = document.querySelector("#menu-button");
+    const closeButton = document.querySelector("#close-menu");
+    const sheet = document.querySelector("#mobile-sheet");
+    const overlay = document.querySelector("#sheet-overlay");
+
+    const openIcon = document.querySelector("#menu-open-icon");
+    const closeIcon = document.querySelector("#menu-close-icon");
+
+    const openMenu = () => {
+        sheet?.classList.remove("translate-x-full");
+        overlay?.classList.remove("opacity-0", "pointer-events-none");
+
+        menuButton?.setAttribute("aria-expanded", "true");
+        sheet?.setAttribute("aria-hidden", "false");
+
+        openIcon?.classList.add("hidden");
+        closeIcon?.classList.remove("hidden");
+
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeMenu = () => {
+        sheet?.classList.add("translate-x-full");
+        overlay?.classList.add("opacity-0", "pointer-events-none");
+
+        menuButton?.setAttribute("aria-expanded", "false");
+        sheet?.setAttribute("aria-hidden", "true");
+
+        openIcon?.classList.remove("hidden");
+        closeIcon?.classList.add("hidden");
+
+        document.body.style.overflow = "";
+    };
+
+    menuButton?.addEventListener("click", openMenu);
+
+    closeButton?.addEventListener("click", closeMenu);
+
+    overlay?.addEventListener("click", closeMenu);
+
+    // Cerrar al seleccionar un enlace
+    sheet?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+    });
+
+    // Cerrar con Escape
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
+    });
+</script>
