@@ -19,15 +19,7 @@ interface Props {
 }
 
 const defaultSections: FooterSection[] = [
-  {
-    title: "Soluciones",
-    links: [
-      { label: "Home energy", href: "#" },
-      { label: "Business energy", href: "#" },
-      { label: "Solar & battery", href: "#" },
-      { label: "Electric vehicles", href: "#" },
-    ],
-  },
+  
   {
     title: "Empresa",
     links: [
@@ -42,7 +34,7 @@ const defaultSections: FooterSection[] = [
     links: [
       { label: "Correo: info@powercien.com", href: "mailto:info@powercien.com" },
       { label: "Teléfono: 618212345678", href: "tel:618212345678" },
-      { label: "Facebook", href: "https://www.facebook.com/powercien" },
+      { label: "Facebook", href: "https://www.facebook.com/share/1BbnXerAcU/n" },
       { label: "Instagram", href: "https://www.instagram.com/power_cien100/" },
     ],
   },
@@ -67,17 +59,18 @@ const {
 <footer class={`w-full bg-[#141414] text-zinc-400 ${className}`}>
   <div class="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-10">
     <!-- Parte superior: Marca + Columnas de enlaces -->
-    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
       
       <!-- Columna de Marca (Logo + Descripción) -->
-      <div class="space-y-4 lg:col-span-4">
+      <div class="space-y-4 lg:col-span-4 ">
         <!-- Logo con Badge interactivo -->
         <a href="/" class="inline-flex items-center gap-2 text-white font-bold text-lg hover:opacity-90 transition-opacity">
-          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100 text-zinc-950">
+          <div class="flex h-10 w-16 items-center justify-center rounded-lg bg-zinc-100 text-zinc-950">
             <!-- Icono Rayo ver si cambiar a logo imagen-->
-            <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+             <img src="public/img/logo.jpg" alt="Logotipo de la empresa Power Cien"/>
+            <!-- <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24">
               <path d="M13 2L3 14h8l-1 8 11-13h-8l1-7z" />
-            </svg>
+            </svg> -->
           </div>
           <span>{brandName}</span>
         </a>
@@ -89,7 +82,7 @@ const {
       </div>
 
       <!-- Columnas de Enlaces de Navegación -->
-      <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8">
+      <div class="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:col-span-8">
         {
           sections.map((section) => (
             <div class="space-y-3">

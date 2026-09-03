@@ -26,7 +26,9 @@ const {
 
 <article class={`feature-card feature-card-${variant} `}>
     <div class="feature-card__icon">
-        ⚡
+        <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+              <path d="M13 2L3 14h8l-1 8 11-13h-8l1-7z" />
+        </svg>
     </div>
     <h3 class="feature-card__title">{title}</h3>
     <p class="feature-card__description">{description}</p>
