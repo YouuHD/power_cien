@@ -107,7 +107,6 @@ if (form && message) {
     e.preventDefault();
 
     const formData = new FormData(form);
-    console.log("Form data:", Object.fromEntries(formData.entries()));
     const response = await fetch(form.action, {
       method: "POST",
       headers: {
