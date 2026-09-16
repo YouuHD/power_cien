@@ -23,14 +23,14 @@ const mockFeatures = [
 ];
 
 const checklist = [
-  { title: "Asesoría", description: "texto para acompañar" },
-  { title: "Estudios", description: "texto para acompañar" },
-  { title: "Anteproyectos", description: "texto para acompañar" },
-  { title: "Ingeniería", description: "texto para acompañar" },
-  { title: "Construcción", description: "texto para acompañar" },
-  { title: "Puesta en servicio", description: "texto para acompañar" },
-  { title: "Capacitación", description: "texto para acompañar" },
-  { title: "Mantenimiento", description: "texto para acompañar" },
+  { title: "Asesoría", description: "trabajamos de tu mano para satisfacer o brindarte orientación en las necesidades de tu instalación" },
+  { title: "Estudios", description: "Ofrecemos estudios de calidad de energia, estudios de iluminación, memorias de cálculo, todo para que tu instalación quede 100% certificada" },
+  { title: "Anteproyectos", description: "Te acompañamos y asesoramos para generar el catalogo de conceptos de tu proyecto eléctrico" },
+  { title: "Ingeniería", description: "Te apoyamos con la elaboración de planes electricos, diagramas unifilares, cuadros de carga para la ejecución de tu proyecto" },
+  { title: "Construcción", description: "Contamos con la experiencia necesaria para realizar una instalación limpia y funcional, basada en la normativa mexicana para óptimo funcionamiento" },
+  { title: "Puesta en servicio", description: "Tu infraestructura eléctrica queda 100% garantizada y funcional!" },
+  { title: "Capacitación", description: "Nuestros ingenieros están altamente capacitados para poder brindarte apoyo ante cualquier anomalía en tu sistema eléctrico" },
+  { title: "Mantenimiento", description: "Te apoyamos con los mantenimientos predictivos y correctivos, ya sea en baja, media o en álta tensión para que tu producción no se detenga" },
 ];
 
 const defaultSteps = [
@@ -45,7 +45,7 @@ const defaultSteps = [
 	<Hero variant="dark-accent"/>
 	<Stats stats={[
 		{ title: "13+", description: "Años de experiencia" },
-		{ title: "Instalaciones", description: "Industriales"},
+		{ title: "Infraestructura", description: "Eléctrica"},
 		{ title: "Cobertura", description: "Nacional" },
 		{ title: "100%", description: "Rentabilidad" }
 	]} />
@@ -57,7 +57,7 @@ const defaultSteps = [
 		features={mockFeatures}
 		direction="right"
 		variant="yellow"
-		imageSrc="public/img/experiencia.png"
+		imageSrc="public/img/experiencia.webp"
 	/>
 	<HeroSection
 		tag="Nosotros"
@@ -66,7 +66,7 @@ const defaultSteps = [
 		
 		direction="left"
 		variant="yellow"
-		imageSrc="public/img/Personal.jpeg"
+		imageSrc="public/img/Personal.webp"
 	/>
 
 	<FeatureListHero
@@ -100,12 +100,19 @@ const defaultSteps = [
 	]} />
 
 	<CardSection badge="Proyectos" title="Nuestros trabajos" description="Descubre algunos de nuestros proyectos más destacados y la solución que ofrecemos para cada uno." theme="light">
-		<IconCard title="Grupo PEPSI" description="Instalación, canalización y cableado de tableros de distribución 220/127 V, Instalación de charofil en bajo anden para uso exclusivo de ALSTOM, Puesta en marcha de servicios generales, entre otros."/>
-		<IconCard title="LG-MAGNA" description="Instalación eléctrica a nave industrial de Grupo Davisa de 60,00 m2, subestación total de 18.5 MVA."  />
-		<IconCard title="HUYNDAI" description="Instalación de subestación eléctrica de Grupo Hyundai, subestación total de 4.5 MVA incluyendo instalación de 3 transformadores secos de 1500kva, etc." />
-		
-		
+		<IconCard title="Grupo PEPSI" description_simple="Se realizó instalación eléctrica" description="Instalación, canalización y cableado de tableros de distribución 220/127 V, Instalación de charofil en bajo anden para uso exclusivo de ALSTOM, Puesta en marcha de servicios generales, entre otros."/>
+		<IconCard title="LG-MAGNA" description_simple="Instalación eléctrica a nave industrial" description="Instalación eléctrica a nave industrial de Grupo Davisa de 60,00 m2, subestación total de 18.5 MVA."  />
+		<IconCard title="HUYNDAI"  description_simple="Instalación de subestación eléctrica"description="Instalación de subestación eléctrica de Grupo Hyundai, subestación total de 4.5 MVA incluyendo instalación de 3 transformadores secos de 1500kva, etc." />	
 	</CardSection>
+	<div class="flex justify-center pt-4 pb-8">
+		<a href="/proyectos" class="w-full sm:w-auto h-full">
+			<Button variant="secondary" size="large">Ver más proyectos</Button>
+		</a>
+
+	</div>
+
+	
+
 
 	<HowItWorks
 		tag="¿Cómo lo hacemos?"
@@ -116,7 +123,7 @@ const defaultSteps = [
 	/>
   	<GetInTouch
 		title="¿Listo para llevar tu proyecto al siguiente nivel?"
-		subtitle="Obtén un presupuesto personalizado en menos de 24 horas y descubre cómo podemos ayudarte a alcanzar tus objetivos."
+		subtitle="Obtén un presupuesto personalizado y descubre cómo podemos ayudarte a alcanzar tus objetivos."
 		placeholder="Ingresa tu correo electrónico"
 		buttonText="Enviar"
 		variant="light"

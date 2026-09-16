@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavBar from '../components/navBar.astro';
+import Hero from '../components/hero.astro';
+import '../styles/global.css';
+import GetInTouch from '../components/getInTouch.astro';
+import Footer from '../components/footer.astro';
+import IconCard from '../components/iconCard.astro';
+import CardSection from '../components/cardSection.astro';
+import Button from '../components/button.astro';
+---
+
+<Layout>
+    <NavBar variant="dark"/>
+
+    <CardSection 
+        badge="Proyectos" 
+        title="Nuestros trabajos" 
+        description="Descubre todos nuestros proyectos realizados con orgullo y la solución que ofrecemos para cada uno." 
+        theme="light">
+
+            <IconCard 
+                title="Grupo PEPSI" 
+                description_simple="Se realizó instalación eléctrica" 
+                description="Instalación, canalización y cableado de tableros de distribución 220/127 V, Instalación de charofil en bajo anden para uso exclusivo de ALSTOM, Puesta en marcha de servicios generales, entre otros."/>
+            <IconCard 
+                title="LG-MAGNA" 
+                description_simple="Instalación eléctrica a nave industrial" 
+                description="Instalación eléctrica a nave industrial de Grupo Davisa de 60,00 m2, subestación total de 18.5 MVA."  />
+            <IconCard 
+                title="HUYNDAI"  
+                description_simple="Instalación de subestación eléctrica"
+                description="Instalación de subestación eléctrica de Grupo Hyundai, subestación total de 4.5 MVA incluyendo instalación de 3 transformadores secos de 1500kva, etc." />	
+            <!--  -->
+                
+            <IconCard 
+                title="Grupo PEPSI" 
+                description_simple="Se realizó instalación eléctrica" 
+                description="Instalación, canalización y cableado de tableros de distribución 220/127 V, Instalación de charofil en bajo anden para uso exclusivo de ALSTOM, Puesta en marcha de servicios generales, entre otros."/>
+            <IconCard 
+                title="LG-MAGNA" 
+                description_simple="Instalación eléctrica a nave industrial" 
+                description="Instalación eléctrica a nave industrial de Grupo Davisa de 60,00 m2, subestación total de 18.5 MVA."  />
+            <IconCard 
+                title="HUYNDAI"  
+                description_simple="Instalación de subestación eléctrica"
+                description="Instalación de subestación eléctrica de Grupo Hyundai, subestación total de 4.5 MVA incluyendo instalación de 3 transformadores secos de 1500kva, etc." />	
+	</CardSection>
+	<a href="/" class="flex justify-center pt-4 pb-8">
+		<Button variant="secondary" size="large">Volver</Button>
+	</a>
+    
+    <GetInTouch
+		title="¿Listo para llevar tu proyecto al siguiente nivel?"
+		subtitle="Obtén un presupuesto personalizado en menos de 24 horas y descubre cómo podemos ayudarte a alcanzar tus objetivos."
+		placeholder="Ingresa tu correo electrónico"
+		buttonText="Enviar"
+		variant="light"
+	/>
+	<Footer
+		brandName="Power Cien"
+		description="Ser una empresa comprometida con la satisfacción total de nuestros clientes, destacando por la innovación y alta calidad, contribuyendo así con el crecimiento profesional de nuestros colaboradores y de nuestro país."
+		copyright="© 2026 Power Cien. Todos los derechos reservados."
+	/>
+
+	
+</Layout>

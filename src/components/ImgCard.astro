@@ -1,0 +1,41 @@
+---
+// src/components/ServiceCard.astro
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+  description: string;
+  imageSrc: ImageMetadata; 
+  imageAlt: string;
+  headerBgColor?: string; 
+}
+
+const { 
+  title, 
+  description, 
+  imageSrc, 
+  imageAlt, 
+  headerBgColor = "bg-[#ff6b7a]" 
+} = Astro.props;
+---
+
+<article class="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col transition-transform duration-200 hover:-translate-y-1">
+  <!-- Cabecera con fondo dinámico e Imagen centrada -->
+  <div class={`${headerBgColor} h-40 flex items-center justify-center p-6`}>
+    <Image 
+      src={imageSrc} 
+      alt={imageAlt} 
+      class="w-20 h-20 object-contain drop-shadow-sm"
+    />
+  </div>
+
+  <!-- Cuerpo de la tarjeta con texto -->
+  <div class="p-6 text-center flex flex-col justify-center flex-grow">
+    <h3 class="text-xl font-bold text-slate-900 mb-2">
+      {title}
+    </h3>
+    <p class="text-slate-400 text-sm leading-snug">
+      {description}
+    </p>
+  </div>
+</article>
