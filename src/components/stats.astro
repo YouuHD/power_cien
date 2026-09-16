@@ -9,7 +9,7 @@ const { stats = [] } = Astro.props;
 
 ---
 
-<section class="stats">
+<section class="stats ">
     {stats.map((stat) => (
         <StatCard title={stat.title} description={stat.description} />
     ))}

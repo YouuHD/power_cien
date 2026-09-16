@@ -24,8 +24,8 @@ const cardStyles = {
   light: {
     cardBg: "bg-(--neutral) text-zinc-900 border-zinc-200",
     title: "text-zinc-950",
-    subtitle: "text-zinc-500",
-    input: "border-zinc-300 bg-white text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-zinc-900/10",
+    subtitle: "text-zinc-700",
+    input: "border-zinc-500 bg-white text-zinc-800 placeholder:text-zinc-600 focus:border-zinc-900 focus:ring-zinc-900/10",
     button: "bg-zinc-900 text-white hover:bg-zinc-800 focus-visible:ring-zinc-900",
   },
   dark: {
@@ -83,7 +83,7 @@ const cardStyles = {
 
         <button
           type="submit"
-          class={`w-full shrink-0 rounded-lg px-6 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:w-auto ${cardStyles.button}`}
+          class={`w-full shrink-0 rounded-lg px-6 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:w-auto cursor-pointer ${cardStyles.button}`}
         >
           {buttonText}
         </button>
