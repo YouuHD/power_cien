@@ -1,9 +1,11 @@
 ---
 import Popover from "./popover.astro";
+import Video from "./video.astro";
 export interface ChecklistItem {
   title: string;
   description: string;
   icon?: string; 
+
 }
 
 interface Props {
@@ -16,6 +18,8 @@ interface Props {
   imageSrc?: string;
   imageAlt?: string;
   class?: string;
+  isVideo?: boolean;
+  videoSrc?: string;
 }
 
 const {
@@ -28,6 +32,8 @@ const {
   imageSrc,
   imageAlt = "Feature visual",
   class: className = "",
+  isVideo = false,
+  videoSrc = "",
 } = Astro.props;
 
 const variantStyles = {
@@ -105,7 +111,8 @@ const isImageLeft = direction === "left";
 
                 <!-- Título y Texto secundario -->
                 <div>
-                  <Popover title={item.title} description={item.description} image={item.icon || "public/img/logo.png"}>
+                  <Popover title={item.title} description={item.description} 
+                  image={item.icon || "public/img/logo.png"}>
                   <h4 class={`text-lg sm:text-sm font-semibold leading-none z-0 ${variantStyles.itemTitle}`}>
                     {item.title}
                   </h4>      
@@ -127,18 +134,29 @@ const isImageLeft = direction === "left";
       >
         <slot name="media">
           {
-            imageSrc ? (
-              <img
-                src={imageSrc}
-                alt={imageAlt}
-                class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                loading="lazy"
+            isVideo ? (
+              <Video
+                src={videoSrc}
+                poster="public/img/video-poster.jpg"
+                muted
+                autoPlay={true}
+                loop
+                class="aspect-video rounded-2xl"
               />
             ) : (
-              //<!-- Placeholder Figma Grid -->
-              <div class="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [bg-size:16px_16px] bg-zinc-900/90 flex items-center justify-center">
-                <span class="text-xs text-zinc-600 font-medium">Image / Asset Placeholder</span>
-              </div>
+              imageSrc ? (
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                />
+              ) : (
+                //<!-- Placeholder Figma Grid -->
+                <div class="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] [bg-size:16px_16px] bg-zinc-900/90 flex items-center justify-center">
+                  <span class="text-xs text-zinc-600 font-medium">Image / Asset Placeholder</span>
+                </div>
+              )
             )
           }
         </slot>
