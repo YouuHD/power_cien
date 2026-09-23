@@ -1,0 +1,43 @@
+---
+interface Props {
+    src: string;
+    poster?: string;
+    alt?: string;
+    autoPlay?: boolean;
+    loop?: boolean;
+    controls?: boolean;
+    muted?: boolean;
+    playsInline?: boolean;
+    class?: string;
+}
+
+
+const {
+  src,
+  poster,
+  alt = "Video",
+  autoPlay = false,
+  controls = true,
+  loop = false,
+  muted = false,
+  playsInline = true,
+  class: className = "",
+} = Astro.props;
+
+---
+
+<div class={`relative w-full overflow-hidden ${className}`}>
+  <video
+    src={src}
+    poster={poster}
+    aria-label={alt}
+    autoplay={autoPlay}
+    controls={controls}
+    loop={loop}
+    muted={muted}
+    playsinline={playsInline}
+    class="h-full w-full object-cover"
+  >
+    Tu navegador no soporta la reproducción de videos.
+  </video>
+</div>

@@ -3,7 +3,6 @@
 import Layout from '../layouts/Layout.astro';
 import Button from '../components/button.astro';
 import '../styles/global.css';
-import StatCard from '../components/StatCard.astro';
 import IconCard from '../components/iconCard.astro';
 import NavBar from '../components/navBar.astro';
 import Hero from '../components/hero.astro';
@@ -15,6 +14,7 @@ import FeatureListHero from '../components/FeatureListHero.astro';
 import HowItWorks from '../components/HowItWorks.astro';
 import GetInTouch from '../components/getInTouch.astro';
 import Footer from '../components/footer.astro';
+import Video from '../components/video.astro';
 
 const mockFeatures = [
   { title: "13+", subtitle: "Años de experiencia" },
@@ -76,9 +76,9 @@ const defaultSteps = [
 		items={checklist}
 		direction="left"
 		variant="dark"
-		imageSrc="public/img/maquina.jpeg"
+		isVideo={true}
+		videoSrc="public/video/video.mp4"
 	/>
-
 	<CardSection badge="Especialidades" title="Áreas en las que destacamos" description="Garantizamos la calidad y eficiencia en todos nuestros servicios" theme="dark">
 		<NewCard title="Diseño e Ingeniería Eléctrica" description="Conceptual de de Detalle" variant="yellow" >
 			<svg slot="start-icon" class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -110,8 +110,6 @@ const defaultSteps = [
 		</a>
 
 	</div>
-
-	
 
 
 	<HowItWorks
